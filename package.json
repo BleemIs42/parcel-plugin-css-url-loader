@@ -1,0 +1,18 @@
+{
+  "name": "parcel-plugin-url2base64",
+  "version": "0.0.1",
+  "description": "A plugin for parcel to convert css/less/scss url into base64",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf .cache dist && parcel build ./example/index.html "
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-url2base64": "file:./"
+  },
+  "dependencies": {
+    "mime": "^2.4.2"
+  },
+  "author": "Barry Yan <barry.yansh@gmail.com>"
+}

@@ -1,0 +1,6 @@
+{
+  "url2base64": {
+    "exts": ["png"],
+    "limit": 10
+  }
+}
