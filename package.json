@@ -8,8 +8,9 @@
     "build": "rm -rf .cache dist && parcel build ./example/index.html "
   },
   "devDependencies": {
+    "less": "^3.9.0",
     "parcel-bundler": "^1.12.3",
-    "parcel-plugin-css-url-loader": "file:./"
+    "parcel-plugin-css-url-loader": "1.0.2"
   },
   "dependencies": {
     "mime": "^2.4.2"
