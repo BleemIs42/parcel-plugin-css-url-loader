@@ -3101,6 +3101,11 @@ mime@1.4.1:
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
   integrity sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==
 
+mime@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.2.tgz#ce5229a5e99ffc313abac806b482c10e7ba6ac78"
+  integrity sha512-zJBfZDkwRu+j3Pdd2aHsR5GfH2jIWhmL1ZzBoc+X+3JEti2hbArWcyJ+1laC1D2/U/W1a/+Cegj0/OnEU2ybjg==
+
 mimic-fn@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
@@ -3550,8 +3555,12 @@ parcel-bundler@^1.12.3:
     v8-compile-cache "^2.0.0"
     ws "^5.1.1"
 
-"parcel-plugin-url2base64@file:..":
-  version "0.0.1"
+parcel-plugin-css-url-loader@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/parcel-plugin-css-url-loader/-/parcel-plugin-css-url-loader-1.0.0.tgz#a803c3d553d2f5248fea9641238ea677bf2784d6"
+  integrity sha512-PMYU2K7e4lB3FyYhCAlOTHZh0p7weqqrlJ08hCoc45eRudLKPyDpboKOEyJmohTxgqMN2OTS2Sv2an/eST2FyQ==
+  dependencies:
+    mime "^2.4.2"
 
 parse-asn1@^5.0.0:
   version "5.1.4"
