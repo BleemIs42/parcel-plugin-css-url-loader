@@ -25,6 +25,7 @@ class UrlLoaderAsset extends CSSAsset {
         if(css){
             this.pluginConfig = this.pluginConfig || getConfig()
             const { exts = EXTS, limit = LIMIT } = this.pluginConfig
+            
             this.dependencies.forEach((val, key) => {
                 const { name, resolved } = val
                 const imagePath = join(dirname(this.name), name)
@@ -39,7 +40,7 @@ class UrlLoaderAsset extends CSSAsset {
                     relativeName: relative(this.options.rootDir, imagePath).replace(/\\/g, '/'),
                     type
                 })
-                const regexp = new RegExp(hashname, 'g')
+
                 let base64str = ''
                 if(cache.has(hashname)){
                     base64str = cache.get(hashname)
@@ -48,6 +49,8 @@ class UrlLoaderAsset extends CSSAsset {
                     const filemime = mime.getType(imagePath)
                     base64str = `data:${filemime};base64,${data.toString('base64')}`
                 }
+
+                const regexp = new RegExp(hashname, 'g')
                 css.value = css.value.replace(regexp, base64str)
 
                 cache.set(hashname, base64str)
