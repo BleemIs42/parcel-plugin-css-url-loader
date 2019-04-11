@@ -1,61 +1,61 @@
 const { readFileSync, statSync, existsSync } = require('fs')
 const mime = require('mime')
 const CSSAsset = require('parcel-bundler/src/assets/CSSAsset')
-const { dirname, join, resolve, extname, normalize } = require('path')
+const { dirname, join, resolve, extname, normalize, relative, basename } = require('path')
 
 const projectRootPath = resolve(__dirname, '../../../')
 const parcelrcPath = join(projectRootPath, '.parcelrc')
 const getConfig = () => existsSync(parcelrcPath) ? JSON.parse(readFileSync(parcelrcPath)).url2base64 : {} 
 
-const EXTS = ['png', 'svg', 'jpg', 'gif']
+const EXTS = ['png', 'svg', 'jpg', 'gif', 'jpeg']
 const LIMIT = 1000
+
+const cache = new Map()
 
 class UrlLoaderAsset extends CSSAsset {
     constructor(name, options) {
-      super(name, options)
-      this.type = 'css'
-      this.previousSourceMap = this.options.rendition
-        ? this.options.rendition.map
-        : null
+        super(name, options)
+        this.type = 'css'
+        this.previousSourceMap = this.options.rendition
+            ? this.options.rendition.map
+            : null
     }
-    async load(){
-        this.pluginConfig = this.pluginConfig || getConfig()
-        const { exts = EXTS, limit = LIMIT } = this.pluginConfig
+    async postProcess(generated){
+        const css = generated.find(e => e.type === 'css')
+        if(css){
+            this.pluginConfig = this.pluginConfig || getConfig()
+            const { exts = EXTS, limit = LIMIT } = this.pluginConfig
+            this.dependencies.forEach((val, key) => {
+                const { name, resolved } = val
+                const imagePath = join(dirname(this.name), name)
 
-        const dir = dirname(this.name)
-        let content = readFileSync(this.name, this.encoding).toString()
+                const type = extname(imagePath).substr(1)
+                if(!exts.includes(type)) return 
+    
+                const fileStat = statSync(imagePath)
+                if(fileStat.size / 1024 > limit) return
+                
+                const hashname = this.generateBundleName.call({
+                    relativeName: relative(this.options.rootDir, imagePath).replace(/\\/g, '/'),
+                    type
+                })
+                const regexp = new RegExp(hashname, 'g')
+                let base64str = ''
+                if(cache.has(hashname)){
+                    base64str = cache.get(hashname)
+                }else{
+                    const data = readFileSync(imagePath)
+                    const filemime = mime.getType(imagePath)
+                    base64str = `data:${filemime};base64,${data.toString('base64')}`
+                }
+                css.value = css.value.replace(regexp, base64str)
 
-        // normalize('./..images/logo') => '..images/logo'
-        let urlMap = (content.match(/url\((\S+)\)/g) || [])
-                        .map(url => url.replace(/url|\(|\)|"|'/g, ''))
-                        .filter(url => !url.includes('data:'))
-                        .map(normalize)
-        this.replacedMap = []
-        urlMap = new Set(urlMap)
-        urlMap.forEach(url => {
-            const filePath = join(dir, url)
+                cache.set(hashname, base64str)
 
-            const extName = extname(filePath).substr(1)
-            if(!exts.includes(extName)) return 
-
-            const fileStat = statSync(filePath)
-            if(fileStat.size / 1024 > limit) return 
-
-            this.replacedMap.push(url)
-            const data = existsSync(filePath) ? readFileSync(filePath) : ''
-            const filemime = mime.getType(filePath)
-            content = content.replace(url, `data:${filemime};base64,${data.toString('base64')}`)
-        })
-        return Promise.resolve(content)
-    }
-    async generate() {
-        this.replacedMap.forEach(url => {
-            // Path such as ../image/logo and ./../image/logo are the same path, 
-            // they are resolved as ./../image/logo in dependencies
-            this.dependencies.delete(url)
-            this.dependencies.delete(`./${url}`)
-        })
-        return await super.generate()
+                this.dependencies.delete(`./${normalize(name)}`)
+            })
+        }
+        return generated
     }
 }
 

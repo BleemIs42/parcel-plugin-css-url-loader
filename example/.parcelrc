@@ -1,6 +1,6 @@
 {
   "url2base64": {
-    "exts": ["png"],
+    "exts": ["png", "svg"],
     "limit": 10
   }
 }
