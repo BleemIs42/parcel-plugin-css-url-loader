@@ -11,7 +11,7 @@ npm install parcel-plugin-css-url-loader --save-dev
 ```js
 // .parcelrc
 {
-  "url2base64": {
+  "css-url-loader": {
     "exts": ['png', 'svg', 'jpg', 'gif'],
     "limit": 1000    //kb
   }

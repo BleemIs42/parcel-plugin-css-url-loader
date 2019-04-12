@@ -1,6 +1,6 @@
 {
   "name": "parcel-plugin-css-url-loader",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A plugin for parcel to convert css/less/scss url into base64",
   "main": "src/index.js",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "less": "^3.9.0",
-    "parcel-bundler": "^1.12.3",
+    "parcel-bundler": "^1.10.3",
     "parcel-plugin-css-url-loader": "1.0.2"
   },
   "dependencies": {

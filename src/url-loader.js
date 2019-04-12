@@ -1,11 +1,11 @@
 const { readFileSync, statSync, existsSync } = require('fs')
 const mime = require('mime')
-const CSSAsset = require('parcel-bundler/src/assets/CSSAsset')
+const CSSAsset = require(`parcel-bundler/${parseInt(process.versions.node, 10) < 8 ? 'lib' : 'src'}/assets/CSSAsset`)
 const { dirname, join, resolve, extname, normalize, relative, basename } = require('path')
 
 const projectRootPath = resolve(__dirname, '../../../')
 const parcelrcPath = join(projectRootPath, '.parcelrc')
-const getConfig = () => existsSync(parcelrcPath) ? JSON.parse(readFileSync(parcelrcPath)).url2base64 : {} 
+const getConfig = () => existsSync(parcelrcPath) ? JSON.parse(readFileSync(parcelrcPath))['css-url-loader'] : {} 
 
 const EXTS = ['png', 'svg', 'jpg', 'gif', 'jpeg']
 const LIMIT = 10240

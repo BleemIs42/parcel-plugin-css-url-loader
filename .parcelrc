@@ -1,5 +1,5 @@
 {
-  "url2base64": {
+  "css-url-loader": {
     "exts": ["png", "svg"],
     "limit": 10
   }
