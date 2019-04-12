@@ -8,7 +8,7 @@ const parcelrcPath = join(projectRootPath, '.parcelrc')
 const getConfig = () => existsSync(parcelrcPath) ? JSON.parse(readFileSync(parcelrcPath)).url2base64 : {} 
 
 const EXTS = ['png', 'svg', 'jpg', 'gif', 'jpeg']
-const LIMIT = 1000
+const LIMIT = 10240
 
 const cache = new Map()
 
@@ -50,11 +50,10 @@ class UrlLoaderAsset extends CSSAsset {
                     base64str = `data:${filemime};base64,${data.toString('base64')}`
                 }
 
-                const regexp = new RegExp(hashname, 'g')
+                const regexp = new RegExp(`(${this.options.publicURL})?${hashname}`, 'g')
                 css.value = css.value.replace(regexp, base64str)
 
                 cache.set(hashname, base64str)
-
                 this.dependencies.delete(`./${normalize(name)}`)
             })
         }
