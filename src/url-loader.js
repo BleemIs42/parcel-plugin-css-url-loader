@@ -1,7 +1,7 @@
 const { readFileSync, statSync, existsSync } = require('fs')
 const mime = require('mime')
 const CSSAsset = require(`parcel-bundler/${parseInt(process.versions.node, 10) < 8 ? 'lib' : 'src'}/assets/CSSAsset`)
-const { dirname, join, resolve, extname, normalize, relative, basename } = require('path')
+const { dirname, join, resolve, extname, normalize, relative } = require('path')
 
 const projectRootPath = resolve(__dirname, '../../../')
 const parcelrcPath = join(projectRootPath, '.parcelrc')

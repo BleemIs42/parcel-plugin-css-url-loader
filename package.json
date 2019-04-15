@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf .cache dist && parcel build ./example/index.html "
+    "build": "rm -rf .cache dist && parcel build ./example/index.html --public-url='./'"
   },
   "devDependencies": {
     "less": "^3.9.0",
