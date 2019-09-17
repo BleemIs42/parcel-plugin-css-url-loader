@@ -15,5 +15,9 @@
   "dependencies": {
     "mime": "^2.4.2"
   },
-  "author": "Barry Yan <barry.yansh@gmail.com>"
+  "author": "Barry Yan <barry.yansh@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BarryYan/parcel-plugin-css-url-loader.git"
+  }
 }
