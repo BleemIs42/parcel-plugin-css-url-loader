@@ -1,0 +1,8 @@
+node_modules/
+example/
+dist/
+.cache/
+
+.DS_Store
+*.tgz
+*.log*
